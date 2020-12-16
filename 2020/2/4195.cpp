@@ -1,11 +1,14 @@
 // 유니온 파인드, 시간을 줄일 수 있는 방법을 찾아보자
+// -> 해시 테이블을 사용해 이름을 입력받을 때마다
+// 테이블에서 탐색하여 없으면 새 이름번호를 테이블에 이름을 키 값으로
+//삼아 할당하고 있으면 이름번호를 불러와 Find혹은  Union함수를 실행한다.   
 //https://www.acmicpc.net/problem/4195
  
 #include <iostream>
 #include <map>
 #include <string>
 
-using namespace std;
+using namespace std; 
 typedef pair<string, int> pis;
 
 int T, F;
@@ -23,8 +26,10 @@ int uni(){
 	
 	pis r1 = findRoot(c1);
 	pis r2 = findRoot(c2);
+	
 //	cout << c1 << " 's root : " << r1.first<<endl;
 //	cout << c2 << " 's root : " << r2.first<<endl;
+
 	if(r1.first < r2.first){
 		CHARS[r1.first] = pis(r1.first, r1.second + r2.second);
 		CHARS[r2.first] = pis(r1.first, r2.second);
@@ -54,5 +59,6 @@ int main(void){
 		}
 	
 	}
+	
 	return 0;
 } 
