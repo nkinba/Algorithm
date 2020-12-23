@@ -1,22 +1,20 @@
 /* 1949 우수 마을 
-	2564KB	32ms	C++14 	1443B
+	3644	12ms	C++14 	1994B
 	 
 	트리의 경우 사이클이 없으므로 맨 처음 입력받는 노드를 Root로 하여 
 	트리를 preorder로 트리를 순회하면서 각 노드에서 우수 마을일 때와 아닐 때의 인구 수 합을 비교하는 
 	동적 계획법으로 풀었음 
-	 
-	시간이 훨씬 적게 걸린 소스들이 많길래 줄일 방안을 찾아본다.
-	 
+	 	 
 	 https://www.acmicpc.net/problem/1949 
-
-
 */
+
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
 int N;
+int dp[2][10001] ={{0,},};
 	
 struct node{
 	static int count;
@@ -32,19 +30,23 @@ int node::count = 0;
 node* Nodes;
 
 int process(node& R, bool type, int from){
-	int res = 0;
 	int now = R.num;
-	for(size_t i=0; i<R.links.size(); i++){
-			if(R.links[i]->num == from) continue;
+	int& res = dp[type][now];
+	
+	if(res) return res;
+	
+	vector<node*>& nextNodes = R.links;
+	for(node* next : nextNodes){
+			if(next->num == from) continue;
 			
 			if(!type)
-				res += max(process(*R.links[i], !type, now), process(*R.links[i], type, now));
+				res += max(process(*next, !type, now), process(*next, type, now));
 			else
-				res += process(*R.links[i], !type, now);
+				res += process(*next, !type, now);
 		
 	}
-	if(type) res+=R.val;
-		cout << "Now Node Num is " << R.num << " , " << type <<endl; cout << "result : " << res <<endl;
+	if(type) res += R.val;
+//		cout << "Now Node Num is " << R.num << " , " << type <<endl; cout << "result : " << res <<endl;
 
 	return res;
 }
