@@ -23,9 +23,8 @@ int main(void){
 		queue<int> nq;
 		vector<int> br[N+1];
 		
-		FOR(i, 1, N) cin >> W[i];		FOR(i, 1, N) cin >> W[i];		FOR(i, 1, N) cin >> W[i];
-		queue<int> nq;
-		vector<int> br[N+1];
+		FOR(i, 1, N) cin >> W[i];
+	
 		FOR(i, 1, K){
 			cin >> X >> Y;
 			br[X].emplace_back(Y);
