@@ -16,14 +16,10 @@ pii modTree(int from, int to, int cur, int start, int end){
  	
 	if(start > from || end < from ) 
 		return pii(MIN, MAX);
-	
-	MIN = min(MIN, to);
-	MAX = max(MAX, to);
 
 	if(start == end){
 		MIN = MAX = to;
 		return pii(MIN, MAX);
-
 	}
 	
 	pii l = modTree(from, to, cur*2, start, (start+end)/2);
