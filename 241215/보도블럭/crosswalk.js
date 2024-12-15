@@ -4,6 +4,7 @@ const rl = readline.createInterface({
     input: process.stdin
 })
 
+const lines = []
 let maps
 let mapsClockwise90
 let n, L
@@ -11,24 +12,27 @@ let n, L
 let readCount = -1
 rl.on('line', line => {
     if (readCount < 0) {
-        [n, L] = line.split(' ').map(e => Number(e))
+        [n, L] = line.trim().split(' ').map(e => parseInt(e))
 
         maps = init2DimArr(n)
         mapsClockwise90 = init2DimArr(n)
         readCount += 1
-        return
-    }
 
-    const row = line.split(' ').map(e => Number(e))
-    row.forEach((it, index) => {
-        maps[readCount][index] = it
-        mapsClockwise90[index][n - 1 - readCount] = it
-    })
-    readCount += 1
+    } else {
+        lines.push(line.trim())
+    }
 })
 
 rl.on('close', () => {
     let answer = 0
+
+    lines.forEach((line, lineIndex) => {
+        const row = line.split(' ').map(e => Number(e))
+        row.forEach((it, index) => {
+            maps[lineIndex][index] = it
+            mapsClockwise90[index][n - 1 - lineIndex] = it
+        })
+    })
 
     maps.forEach(row => answer += isEnable(row) ? 1 : 0)
     mapsClockwise90.forEach(row => answer += isEnable(row) ? 1 : 0)
